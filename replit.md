@@ -1,7 +1,7 @@
 # Max AI Streaming Platform
 
 ## Overview
-Max AI is an interactive AI-powered streaming platform featuring "Max," the adorable rabbit mascot from Giggles Academy as a 3D animated character that responds to user messages in real-time in English. The platform combines live streaming aesthetics with AI chat capabilities, powered by BNB Chain technology. Users can interact with Max through a chat interface while viewing an animated 3D character display, creating an engaging live-streaming experience. The platform also displays the BNB Chain smart contract address with copy-to-clipboard functionality.
+Max AI is an interactive AI-powered streaming platform featuring "Max," the adorable rabbit mascot from Giggles Academy as a 3D animated character that responds to user messages in real-time in Chinese (中文). The platform combines live streaming aesthetics with AI chat capabilities, powered by BNB Chain technology. Users can interact with Max through a chat interface while viewing an animated 3D character display, creating an engaging live-streaming experience. The platform also displays the BNB Chain smart contract address with copy-to-clipboard functionality.
 
 ## User Preferences
 Preferred communication style: Simple, everyday language.
@@ -22,7 +22,7 @@ The backend is an Express.js server handling HTTP requests and WebSocket connect
 - **Contract Address Display**: Displays a BNB Chain smart contract address with copy-to-clipboard functionality and toast notifications.
 - **Max Mascot Integration**: Incorporates Max stickers (Giggles Academy mascot) as decorative elements throughout the UI, with dynamic animations and brand references.
 - **High-Contrast Design**: Implements a clean, professional design with pure white backgrounds, dark gray foregrounds, and vibrant colors (BNB Chain yellow, blue, green, red) used sparingly for accents and active states. Dark mode inverts colors with dark backgrounds (9% lightness) and light text (92% lightness).
-- **Language**: All application content, AI personality, and UI text are in English.
+- **Language**: All application content, AI personality, and UI text are in Chinese (中文), except for the Contract Address section which remains in English for technical clarity.
 
 ## External Dependencies
 

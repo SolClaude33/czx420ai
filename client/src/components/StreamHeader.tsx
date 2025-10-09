@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Wallet, Sun, Moon, BookOpen, LogOut } from "lucide-react";
 import { useState } from "react";
 import { useWallet } from "@/contexts/WalletContext";
-import maxLogo from "@assets/image-removebg-preview (30)_1759804538074.png";
+import maxLogo from "@assets/generated_images/Max_rabbit_transparent_sticker_79307f18.png";
 
 export default function StreamHeader() {
   const [isDark, setIsDark] = useState(false);

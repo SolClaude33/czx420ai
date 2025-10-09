@@ -1,6 +1,6 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Bot, User } from "lucide-react";
-import maxAvatar from "@assets/image-removebg-preview (30)_1759804538074.png";
+import maxAvatar from "@assets/generated_images/Max_rabbit_transparent_sticker_79307f18.png";
 
 interface ChatMessageProps {
   id: string;

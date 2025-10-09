@@ -32,7 +32,7 @@ export default function ContractAddress() {
               </h3>
             </div>
             <p className="text-sm text-muted-foreground leading-relaxed">
-              Interact with Palu AI directly on the blockchain. This verified smart contract powers all AI interactions.
+              Interact with Max AI directly on the blockchain. This verified smart contract powers all AI interactions.
             </p>
           </div>
         </div>

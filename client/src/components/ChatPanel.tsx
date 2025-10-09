@@ -14,7 +14,7 @@ export default function ChatPanel() {
   const [messages, setMessages] = useState<ChatMessageType[]>([
     {
       id: "1",
-      message: "Welcome to Palu AI stream! I'm the official Binance mascot, now live as an AI! Connect your BNB wallet to start chatting with me!",
+      message: "Welcome to Max AI stream! I'm Max from Giggles Academy, here to help you learn about crypto! Connect your BNB wallet to start chatting with me!",
       sender: "max",
       timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
     }

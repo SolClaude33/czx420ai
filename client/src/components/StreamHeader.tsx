@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Wallet, Sun, Moon, BookOpen, LogOut } from "lucide-react";
 import { useState } from "react";
 import { useWallet } from "@/contexts/WalletContext";
-import paluLogo from "@assets/palu-main.png";
+import maxLogo from "@assets/image-removebg-preview (30)_1759804538074.png";
 
 export default function StreamHeader() {
   const [isDark, setIsDark] = useState(false);
@@ -19,13 +19,13 @@ export default function StreamHeader() {
         <div className="flex items-center gap-4 flex-shrink-0">
           <div className="relative flex items-center gap-3">
             <div className="relative h-14 w-14 rounded-2xl overflow-hidden bg-card shadow-md">
-              <img src={paluLogo} alt="Palu - Binance Mascot" className="h-full w-full object-cover" />
+              <img src={maxLogo} alt="Max - Giggles Academy" className="h-full w-full object-cover" />
             </div>
             <div>
               <h1 className="text-2xl font-black font-[Space_Grotesk] text-foreground flex items-center gap-2">
-                Palu AI
+                Max AI
               </h1>
-              <p className="text-xs text-muted-foreground font-semibold">Binance Official Mascot on BNB Chain</p>
+              <p className="text-xs text-muted-foreground font-semibold">Giggles Academy Mascot on BNB Chain</p>
               <p className="text-[10px] text-muted-foreground/80 font-medium italic mt-0.5">Live AI Stream</p>
             </div>
           </div>
@@ -39,12 +39,12 @@ export default function StreamHeader() {
             data-testid="button-know-more"
           >
             <a 
-              href="https://twitter.com/palucto"
+              href="https://giggles.academy"
               target="_blank"
               rel="noopener noreferrer"
             >
               <BookOpen className="h-5 w-5" />
-              <span>Follow Palu</span>
+              <span>Learn More</span>
             </a>
           </Button>
         </div>

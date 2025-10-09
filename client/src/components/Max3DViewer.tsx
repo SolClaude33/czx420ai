@@ -299,11 +299,11 @@ export default function Max3DViewer({ emotion = 'idle' }: Max3DViewerProps) {
           <div className="flex flex-col items-center gap-4 text-center px-8">
             <img 
               src={maxMain} 
-              alt="Palu" 
+              alt="Max" 
               className="w-48 h-48 opacity-80 animate-bounce"
             />
             <div className="text-foreground text-2xl font-bold">
-              Palu is here!
+              Max is here!
             </div>
             <div className="text-muted-foreground text-sm max-w-md">
               (3D visualization unavailable - chat is fully functional)
@@ -312,7 +312,7 @@ export default function Max3DViewer({ emotion = 'idle' }: Max3DViewerProps) {
         </div>
       )}
 
-      <div ref={containerRef} className="relative z-10 w-full h-full" data-testid="model-palu" />
+      <div ref={containerRef} className="relative z-10 w-full h-full" data-testid="model-max" />
 
       {(emotion === 'talking' || emotion === 'celebrating') && (
         <div className="absolute bottom-20 left-1/2 -translate-x-1/2 flex items-end gap-2 h-14 z-20 bg-white/90 backdrop-blur-sm px-6 py-3 rounded-2xl border border-border shadow-md" data-testid="audio-waves">

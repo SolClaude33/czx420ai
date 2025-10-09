@@ -279,7 +279,7 @@ export default function Max3DViewer({ emotion = 'idle' }: Max3DViewerProps) {
         <div className="absolute top-8 right-8 z-10 animate-in slide-in-from-top-4 duration-300">
           <div className="flex items-center gap-2 bg-primary backdrop-blur-sm px-5 py-2.5 rounded-full shadow-md" data-testid="status-thinking">
             <Sparkles className="h-4 w-4 text-primary-foreground animate-pulse" />
-            <span className="text-primary-foreground text-sm font-bold">Thinking...</span>
+            <span className="text-primary-foreground text-sm font-bold">思考中...</span>
           </div>
         </div>
       )}
@@ -289,7 +289,7 @@ export default function Max3DViewer({ emotion = 'idle' }: Max3DViewerProps) {
           <div className="flex flex-col items-center gap-4">
             <div className="h-12 w-12 rounded-full border-4 border-muted border-t-primary animate-spin" />
             <div className="text-foreground text-lg font-bold">
-              Loading 3D model...
+              加载3D模型中...
             </div>
           </div>
         </div>
@@ -304,10 +304,10 @@ export default function Max3DViewer({ emotion = 'idle' }: Max3DViewerProps) {
               className="w-48 h-48 opacity-80 animate-bounce"
             />
             <div className="text-foreground text-2xl font-bold">
-              Max is here!
+              Max 在这里！
             </div>
             <div className="text-muted-foreground text-sm max-w-md">
-              (3D visualization unavailable - chat is fully functional)
+              (3D 可视化不可用 - 聊天功能完全正常)
             </div>
           </div>
         </div>

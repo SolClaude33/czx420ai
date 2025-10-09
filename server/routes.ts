@@ -45,7 +45,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
             const remainingTime = Math.ceil((MESSAGE_COOLDOWN_MS - timeSinceLastMessage) / 1000);
             ws.send(JSON.stringify({
               type: 'error',
-              data: { message: `Please wait ${remainingTime} seconds before sending another message.` }
+              data: { message: `请等待 ${remainingTime} 秒再发送下一条消息。` }
             }));
             return;
           }

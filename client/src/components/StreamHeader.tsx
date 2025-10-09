@@ -25,8 +25,8 @@ export default function StreamHeader() {
               <h1 className="text-2xl font-black font-[Space_Grotesk] text-foreground flex items-center gap-2">
                 Max AI
               </h1>
-              <p className="text-xs text-muted-foreground font-semibold">Giggles Academy Mascot on BNB Chain</p>
-              <p className="text-[10px] text-muted-foreground/80 font-medium italic mt-0.5">Live AI Stream</p>
+              <p className="text-xs text-muted-foreground font-semibold">Giggles Academy 吉祥物在 BNB Chain</p>
+              <p className="text-[10px] text-muted-foreground/80 font-medium italic mt-0.5">实时 AI 直播</p>
             </div>
           </div>
         </div>
@@ -44,7 +44,7 @@ export default function StreamHeader() {
               rel="noopener noreferrer"
             >
               <BookOpen className="h-5 w-5" />
-              <span>Learn More</span>
+              <span>了解更多</span>
             </a>
           </Button>
         </div>
@@ -86,7 +86,7 @@ export default function StreamHeader() {
             >
               <Wallet className="h-5 w-5" />
               <span className="hidden sm:inline">
-                {isConnecting ? 'Connecting...' : 'Connect Wallet'}
+                {isConnecting ? '连接中...' : '连接钱包'}
               </span>
             </Button>
           )}

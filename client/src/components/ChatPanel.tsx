@@ -8,7 +8,7 @@ import { useWebSocket } from "@/hooks/useWebSocket";
 import { useWallet } from "@/contexts/WalletContext";
 import { useToast } from "@/hooks/use-toast";
 import type { ChatMessage as ChatMessageType } from "@shared/schema";
-import gigglesLogo from '@assets/generated_images/Giggles_logo_transparent_background_4e8db14c.png';
+import gigglesLogo from '@assets/image-removebg-preview (30)_1759978567238.png';
 
 export default function ChatPanel() {
   const [messages, setMessages] = useState<ChatMessageType[]>([

@@ -14,8 +14,8 @@ export default function ChatPanel() {
   const [messages, setMessages] = useState<ChatMessageType[]>([
     {
       id: "1",
-      message: "欢迎来到 Max AI 直播！我是来自 Giggles Academy 的 Max，在这里帮助你学习加密货币！连接你的 BNB 钱包开始与我聊天！",
-      sender: "max",
+      message: "欢迎来到 CZ AI 直播！我是 CZ，BNB Chain 上的智能AI助手，在这里帮助你学习加密货币和区块链！连接你的 BNB 钱包开始与我聊天！",
+      sender: "cz",
       timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
     }
   ]);
@@ -45,7 +45,7 @@ export default function ChatPanel() {
       currentAudioRef.current = audio;
 
       audio.addEventListener('ended', () => {
-        window.dispatchEvent(new CustomEvent('maxAudioEnded'));
+        window.dispatchEvent(new CustomEvent('czAudioEnded'));
         currentAudioRef.current = null;
         isPlayingRef.current = false;
         // Play next audio in queue
@@ -54,7 +54,7 @@ export default function ChatPanel() {
 
       audio.play().catch(err => {
         console.error('Error playing audio:', err);
-        window.dispatchEvent(new CustomEvent('maxAudioEnded'));
+        window.dispatchEvent(new CustomEvent('czAudioEnded'));
         currentAudioRef.current = null;
         isPlayingRef.current = false;
         // Try next audio in queue even if this one failed
@@ -62,7 +62,7 @@ export default function ChatPanel() {
       });
     } catch (error) {
       console.error('Error creating audio:', error);
-      window.dispatchEvent(new CustomEvent('maxAudioEnded'));
+      window.dispatchEvent(new CustomEvent('czAudioEnded'));
       isPlayingRef.current = false;
       // Try next audio in queue even if this one failed
       playNextAudio();
@@ -73,7 +73,7 @@ export default function ChatPanel() {
     if (lastMessage) {
       if (lastMessage.type === 'user_message') {
         setMessages(prev => [...prev, lastMessage.data]);
-      } else if (lastMessage.type === 'max_message') {
+      } else if (lastMessage.type === 'cz_message') {
         setMessages(prev => [...prev, lastMessage.data]);
         
         // Clear any pending fallback timeout
@@ -89,7 +89,7 @@ export default function ChatPanel() {
         } else {
           // No audio available (TTS failed or disabled), return to idle after short delay
           fallbackTimeoutRef.current = window.setTimeout(() => {
-            window.dispatchEvent(new CustomEvent('maxAudioEnded'));
+            window.dispatchEvent(new CustomEvent('czAudioEnded'));
             fallbackTimeoutRef.current = null;
           }, 2000);
         }

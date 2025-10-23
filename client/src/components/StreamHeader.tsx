@@ -19,13 +19,13 @@ export default function StreamHeader() {
         <div className="flex items-center gap-4 flex-shrink-0">
           <div className="relative flex items-center gap-3">
             <div className="relative h-14 w-14 rounded-2xl overflow-hidden bg-card shadow-md">
-              <img src={maxLogo} alt="Max - Giggles Academy" className="h-full w-full object-cover" />
+              <img src={maxLogo} alt="CZ - BNB Chain AI" className="h-full w-full object-cover" />
             </div>
             <div>
               <h1 className="text-2xl font-black font-[Space_Grotesk] text-foreground flex items-center gap-2">
-                Max AI
+                CZ AI
               </h1>
-              <p className="text-xs text-muted-foreground font-semibold">Giggles Academy 吉祥物在 BNB Chain</p>
+              <p className="text-xs text-muted-foreground font-semibold">BNB Chain 智能AI助手</p>
               <p className="text-[10px] text-muted-foreground/80 font-medium italic mt-0.5">实时 AI 直播</p>
             </div>
           </div>

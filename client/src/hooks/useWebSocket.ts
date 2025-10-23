@@ -2,7 +2,7 @@ import { useEffect, useRef, useState, useCallback } from 'react';
 import type { EmotionType } from '@shared/schema';
 
 interface WebSocketMessage {
-  type: 'connection' | 'user_message' | 'max_message' | 'max_emotion' | 'viewer_count' | 'error';
+  type: 'connection' | 'user_message' | 'cz_message' | 'cz_emotion' | 'viewer_count' | 'error';
   data: any;
 }
 
@@ -29,7 +29,7 @@ export function useWebSocket(url: string) {
         const message = JSON.parse(event.data);
         setLastMessage(message);
         
-        if (message.type === 'max_emotion' && message.data.emotion) {
+        if (message.type === 'cz_emotion' && message.data.emotion) {
           setCurrentEmotion(message.data.emotion);
         }
       } catch (error) {
@@ -51,11 +51,11 @@ export function useWebSocket(url: string) {
       setCurrentEmotion('idle');
     };
     
-    window.addEventListener('maxAudioEnded', handleAudioEnded);
+    window.addEventListener('czAudioEnded', handleAudioEnded);
 
     return () => {
       ws.close();
-      window.removeEventListener('maxAudioEnded', handleAudioEnded);
+      window.removeEventListener('czAudioEnded', handleAudioEnded);
     };
   }, [url]);
 

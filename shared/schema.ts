@@ -23,7 +23,7 @@ export type EmotionType = z.infer<typeof emotionSchema>;
 export const chatMessageSchema = z.object({
   id: z.string(),
   message: z.string().min(1).max(2000),
-  sender: z.enum(["user", "max"]),
+  sender: z.enum(["user", "cz"]),
   username: z.string().optional(),
   timestamp: z.string(),
   emotion: emotionSchema.optional(),

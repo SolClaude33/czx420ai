@@ -73,7 +73,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
           wss.clients.forEach((client) => {
             if (client.readyState === WebSocket.OPEN) {
               client.send(JSON.stringify({
-                type: 'max_emotion',
+                type: 'cz_emotion',
                 data: { emotion: 'thinking' }
               }));
             }
@@ -81,10 +81,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
           const aiResponse = await generateAIResponse(message.content);
 
-          const maxMessage = {
+          const czMessage = {
             id: (Date.now() + 1).toString(),
             message: aiResponse.message,
-            sender: 'max' as const,
+            sender: 'cz' as const,
             timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
             emotion: aiResponse.emotion,
             audioBase64: aiResponse.audioBase64,
@@ -93,7 +93,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
           wss.clients.forEach((client) => {
             if (client.readyState === WebSocket.OPEN) {
               client.send(JSON.stringify({
-                type: 'max_emotion',
+                type: 'cz_emotion',
                 data: { emotion: aiResponse.emotion }
               }));
             }
@@ -103,8 +103,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
             wss.clients.forEach((client) => {
               if (client.readyState === WebSocket.OPEN) {
                 client.send(JSON.stringify({
-                  type: 'max_message',
-                  data: maxMessage
+                  type: 'cz_message',
+                  data: czMessage
                 }));
               }
             });
@@ -122,7 +122,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
     ws.send(JSON.stringify({
       type: 'connection',
-      data: { message: 'Connected to Max AI Stream' }
+      data: { message: 'Connected to CZ AI Stream' }
     }));
   });
 

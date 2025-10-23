@@ -91,8 +91,8 @@ export default function CZ3DViewer({ emotion = 'idle' }: CZ3DViewerProps) {
         fbxLoader.load(
           path,
           (fbxModel) => {
-            fbxModel.position.set(0, -1, 0);
-            fbxModel.scale.set(0.02, 0.02, 0.02);
+            fbxModel.position.set(0, -1.5, 0);
+            fbxModel.scale.set(0.01, 0.01, 0.01);
             
             fbxModel.traverse((child) => {
               if ((child as THREE.Mesh).isMesh) {

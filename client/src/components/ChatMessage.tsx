@@ -1,6 +1,6 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Bot, User } from "lucide-react";
-import maxAvatar from "@assets/1211_1759978567238.png";
+import czAvatar from "@assets/image_1761243437671.png";
 
 interface ChatMessageProps {
   id: string;
@@ -24,7 +24,7 @@ export default function ChatMessage({ message, sender, timestamp, username }: Ch
       <Avatar className={`h-11 w-11 flex-shrink-0 ${isCZ ? 'ring-2 ring-primary/30 ring-offset-2 ring-offset-background shadow-sm' : 'ring-2 ring-secondary/30 ring-offset-2 ring-offset-background shadow-sm'}`}>
         {isCZ ? (
           <>
-            <AvatarImage src={maxAvatar} alt="CZ" className="object-cover" />
+            <AvatarImage src={czAvatar} alt="CZ" className="object-cover" />
             <AvatarFallback className="bg-primary">
               <Bot className="h-5 w-5 text-primary-foreground" />
             </AvatarFallback>

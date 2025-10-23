@@ -7,6 +7,7 @@ import type { EmotionType } from '@shared/schema';
 import maxSticker1 from '@assets/image-removebg-preview (33) - copia_1759978567237.png';
 import maxSticker2 from '@assets/1211_1759978567238.png';
 import gigglesLogo from '@assets/image-removebg-preview (30)_1759978567238.png';
+import czLoadingImage from '@assets/image_1761243437671.png';
 
 interface CZ3DViewerProps {
   emotion?: EmotionType;
@@ -91,13 +92,34 @@ export default function CZ3DViewer({ emotion = 'idle' }: CZ3DViewerProps) {
         fbxLoader.load(
           path,
           (fbxModel) => {
-            fbxModel.position.set(0, -1.5, 0);
-            fbxModel.scale.set(0.01, 0.01, 0.01);
+            fbxModel.position.set(0, -1, 0);
+            fbxModel.scale.set(0.02, 0.02, 0.02);
             
             fbxModel.traverse((child) => {
               if ((child as THREE.Mesh).isMesh) {
-                (child as THREE.Mesh).castShadow = true;
-                (child as THREE.Mesh).receiveShadow = true;
+                const mesh = child as THREE.Mesh;
+                mesh.castShadow = true;
+                mesh.receiveShadow = true;
+                
+                // Force smooth shading to fix blocky appearance
+                if (mesh.geometry) {
+                  mesh.geometry.computeVertexNormals();
+                }
+                
+                // Ensure materials use smooth shading
+                if (mesh.material) {
+                  if (Array.isArray(mesh.material)) {
+                    mesh.material.forEach(mat => {
+                      if (mat && 'flatShading' in mat) {
+                        (mat as any).flatShading = false;
+                        mat.needsUpdate = true;
+                      }
+                    });
+                  } else if ('flatShading' in mesh.material) {
+                    (mesh.material as any).flatShading = false;
+                    mesh.material.needsUpdate = true;
+                  }
+                }
               }
             });
 
@@ -294,8 +316,12 @@ export default function CZ3DViewer({ emotion = 'idle' }: CZ3DViewerProps) {
 
       {isLoading && !loadError && (
         <div className="absolute inset-0 flex items-center justify-center z-20 bg-background/80 backdrop-blur-sm">
-          <div className="flex flex-col items-center gap-4">
-            <div className="h-12 w-12 rounded-full border-4 border-muted border-t-primary animate-spin" />
+          <div className="flex flex-col items-center gap-6">
+            <img 
+              src={czLoadingImage} 
+              alt="CZ" 
+              className="w-32 h-32 animate-pulse"
+            />
             <div className="text-foreground text-lg font-bold">
               加载3D模型中...
             </div>

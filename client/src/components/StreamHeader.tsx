@@ -39,7 +39,7 @@ export default function StreamHeader() {
             data-testid="button-know-more"
           >
             <a 
-              href="https://giggles.academy"
+              href="https://www.bnbchain.org"
               target="_blank"
               rel="noopener noreferrer"
             >

@@ -177,15 +177,20 @@ export default function CZ3DViewer({ emotion = 'idle' }: CZ3DViewerProps) {
       });
     };
 
-    // Set timeout to show app even if 3D doesn't load (8 second limit)
+    // Set timeout to show app even if 3D doesn't load (increased to 20s for large GLB files)
     loadTimeoutRef.current = window.setTimeout(() => {
       setIsLoading(false);
       setLoadError(true);
       console.warn('3D model loading timed out - showing UI without 3D');
-    }, 8000);
+    }, 20000);
 
-    // Load idle model first for fast initial render
-    loadModel('/idle.fbx', 'idle').then(() => {
+    // Randomly select one of the 4 idle animations for variety
+    const randomIdleIndex = Math.floor(Math.random() * 4) + 1;
+    const idlePath = randomIdleIndex === 1 ? '/idle.glb' : `/idle${randomIdleIndex}.glb`;
+    console.log(`🎲 Randomly selected idle animation: ${idlePath}`);
+
+    // Load selected idle model first for fast initial render
+    loadModel(idlePath, 'idle').then(() => {
       if (loadTimeoutRef.current !== null) {
         clearTimeout(loadTimeoutRef.current);
         loadTimeoutRef.current = null;
@@ -194,12 +199,12 @@ export default function CZ3DViewer({ emotion = 'idle' }: CZ3DViewerProps) {
       
       // Load other models in background (lazy loading)
       Promise.all([
-        loadModel('/talking.fbx', 'talking'),
-        loadModel('/thinking.fbx', 'thinking'),
-        loadModel('/angry.fbx', 'angry'),
-        loadModel('/celebrating.fbx', 'celebrating'),
-        loadModel('/crazy_dance.fbx', 'crazy_dance'),
-        loadModel('/confused.fbx', 'confused')
+        loadModel('/talking.glb', 'talking'),
+        loadModel('/thinking.glb', 'thinking'),
+        loadModel('/angry.glb', 'angry'),
+        loadModel('/celebrating.glb', 'celebrating'),
+        loadModel('/crazy_dance.glb', 'crazy_dance'),
+        loadModel('/confused.glb', 'confused')
       ]);
     });
 

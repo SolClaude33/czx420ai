@@ -8,11 +8,11 @@ import maxSticker1 from '@assets/image-removebg-preview (33) - copia_17599785672
 import maxSticker2 from '@assets/1211_1759978567238.png';
 import gigglesLogo from '@assets/image-removebg-preview (30)_1759978567238.png';
 
-interface Max3DViewerProps {
+interface CZ3DViewerProps {
   emotion?: EmotionType;
 }
 
-export default function Max3DViewer({ emotion = 'idle' }: Max3DViewerProps) {
+export default function CZ3DViewer({ emotion = 'idle' }: CZ3DViewerProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const sceneRef = useRef<THREE.Scene | null>(null);
   const rendererRef = useRef<THREE.WebGLRenderer | null>(null);

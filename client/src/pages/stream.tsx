@@ -1,6 +1,6 @@
 import { useState } from "react";
 import StreamHeader from "@/components/StreamHeader";
-import Max3DViewer from "@/components/Max3DViewer";
+import CZ3DViewer from "@/components/CZ3DViewer";
 import ChatPanel from "@/components/ChatPanel";
 import ContractAddress from "@/components/ContractAddress";
 import AnimationControls from "@/components/AnimationControls";
@@ -18,7 +18,7 @@ export default function StreamPage() {
       
       <div className="flex flex-1 overflow-hidden relative">
         <div className="flex-1 w-full lg:w-[70%] relative lg:border-r-4 lg:border-primary border-t-4 border-primary">
-          <Max3DViewer emotion={currentEmotion} />
+          <CZ3DViewer emotion={currentEmotion} />
           
           <div className="absolute bottom-8 left-8 flex flex-col gap-3 z-20">
             <AnimationControls onEmotionChange={sendEmotion} currentEmotion={currentEmotion} />

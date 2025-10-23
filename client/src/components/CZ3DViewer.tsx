@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
 import { FBXLoader } from 'three-stdlib';
+import { GLTFLoader } from 'three-stdlib';
 import { OrbitControls } from 'three-stdlib';
 import { Sparkles } from "lucide-react";
 import type { EmotionType } from '@shared/schema';
@@ -86,66 +87,93 @@ export default function CZ3DViewer({ emotion = 'idle' }: CZ3DViewerProps) {
     controlsRef.current = controls;
 
     const fbxLoader = new FBXLoader();
+    const gltfLoader = new GLTFLoader();
 
-    const loadFBXModel = (path: string, state: EmotionType): Promise<void> => {
+    const loadModel = (path: string, state: EmotionType): Promise<void> => {
       return new Promise((resolve) => {
-        fbxLoader.load(
-          path,
-          (fbxModel) => {
-            fbxModel.position.set(0, -1, 0);
-            fbxModel.scale.set(0.02, 0.02, 0.02);
-            
-            fbxModel.traverse((child) => {
-              if ((child as THREE.Mesh).isMesh) {
-                const mesh = child as THREE.Mesh;
-                mesh.castShadow = true;
-                mesh.receiveShadow = true;
-                
-                // Force smooth shading to fix blocky appearance
-                if (mesh.geometry) {
-                  mesh.geometry.computeVertexNormals();
-                }
-                
-                // Ensure materials use smooth shading
-                if (mesh.material) {
-                  if (Array.isArray(mesh.material)) {
-                    mesh.material.forEach(mat => {
-                      if (mat && 'flatShading' in mat) {
-                        (mat as any).flatShading = false;
-                        mat.needsUpdate = true;
-                      }
-                    });
-                  } else if ('flatShading' in mesh.material) {
-                    (mesh.material as any).flatShading = false;
-                    mesh.material.needsUpdate = true;
-                  }
-                }
-              }
-            });
-
-            fbxModel.visible = state === 'idle';
-            scene.add(fbxModel);
-
-            const mixer = new THREE.AnimationMixer(fbxModel);
-            
-            if (fbxModel.animations && fbxModel.animations.length > 0) {
-              const clip = fbxModel.animations[0];
-              modelsRef.current[state] = { model: fbxModel, mixer, clip };
+        // Detect file format from extension (case-insensitive, strips query params)
+        const normalizedPath = path.toLowerCase().split('?')[0].split('#')[0];
+        const isGLTF = normalizedPath.endsWith('.glb') || normalizedPath.endsWith('.gltf');
+        
+        const processModel = (model: THREE.Group, animations: THREE.AnimationClip[]) => {
+          model.position.set(0, -1, 0);
+          model.scale.set(0.02, 0.02, 0.02);
+          
+          model.traverse((child) => {
+            if ((child as THREE.Mesh).isMesh) {
+              const mesh = child as THREE.Mesh;
+              mesh.castShadow = true;
+              mesh.receiveShadow = true;
               
-              if (state === 'idle') {
-                const action = mixer.clipAction(clip);
-                action.play();
+              // Force smooth shading to fix blocky appearance
+              if (mesh.geometry) {
+                mesh.geometry.computeVertexNormals();
+              }
+              
+              // Ensure materials use smooth shading
+              if (mesh.material) {
+                if (Array.isArray(mesh.material)) {
+                  mesh.material.forEach(mat => {
+                    if (mat && 'flatShading' in mat) {
+                      (mat as any).flatShading = false;
+                      mat.needsUpdate = true;
+                    }
+                  });
+                } else if ('flatShading' in mesh.material) {
+                  (mesh.material as any).flatShading = false;
+                  mesh.material.needsUpdate = true;
+                }
               }
             }
+          });
+
+          model.visible = state === 'idle';
+          scene.add(model);
+
+          const mixer = new THREE.AnimationMixer(model);
+          
+          if (animations && animations.length > 0) {
+            const clip = animations[0];
+            modelsRef.current[state] = { model, mixer, clip };
             
-            resolve();
-          },
-          undefined,
-          (error) => {
-            console.error(`Error loading ${state} FBX:`, error);
-            resolve();
+            if (state === 'idle') {
+              const action = mixer.clipAction(clip);
+              action.play();
+            }
           }
-        );
+          
+          resolve();
+        };
+
+        if (isGLTF) {
+          // Use GLTFLoader for .glb/.gltf files (supports >4 skinning weights!)
+          gltfLoader.load(
+            path,
+            (gltf) => {
+              console.log(`✅ Loaded GLB model for ${state} (supports unlimited skinning weights)`);
+              processModel(gltf.scene, gltf.animations);
+            },
+            undefined,
+            (error) => {
+              console.error(`Error loading ${state} GLTF:`, error);
+              resolve();
+            }
+          );
+        } else {
+          // Use FBXLoader for .fbx files (limited to 4 skinning weights)
+          fbxLoader.load(
+            path,
+            (fbxModel) => {
+              console.log(`⚠️ Loaded FBX model for ${state} (limited to 4 skinning weights)`);
+              processModel(fbxModel, fbxModel.animations);
+            },
+            undefined,
+            (error) => {
+              console.error(`Error loading ${state} FBX:`, error);
+              resolve();
+            }
+          );
+        }
       });
     };
 
@@ -157,7 +185,7 @@ export default function CZ3DViewer({ emotion = 'idle' }: CZ3DViewerProps) {
     }, 8000);
 
     // Load idle model first for fast initial render
-    loadFBXModel('/idle.fbx', 'idle').then(() => {
+    loadModel('/idle.fbx', 'idle').then(() => {
       if (loadTimeoutRef.current !== null) {
         clearTimeout(loadTimeoutRef.current);
         loadTimeoutRef.current = null;
@@ -166,12 +194,12 @@ export default function CZ3DViewer({ emotion = 'idle' }: CZ3DViewerProps) {
       
       // Load other models in background (lazy loading)
       Promise.all([
-        loadFBXModel('/talking.fbx', 'talking'),
-        loadFBXModel('/thinking.fbx', 'thinking'),
-        loadFBXModel('/angry.fbx', 'angry'),
-        loadFBXModel('/celebrating.fbx', 'celebrating'),
-        loadFBXModel('/crazy_dance.fbx', 'crazy_dance'),
-        loadFBXModel('/confused.fbx', 'confused')
+        loadModel('/talking.fbx', 'talking'),
+        loadModel('/thinking.fbx', 'thinking'),
+        loadModel('/angry.fbx', 'angry'),
+        loadModel('/celebrating.fbx', 'celebrating'),
+        loadModel('/crazy_dance.fbx', 'crazy_dance'),
+        loadModel('/confused.fbx', 'confused')
       ]);
     });
 

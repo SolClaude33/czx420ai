@@ -96,8 +96,29 @@ export default function CZ3DViewer({ emotion = 'idle' }: CZ3DViewerProps) {
         const isGLTF = normalizedPath.endsWith('.glb') || normalizedPath.endsWith('.gltf');
         
         const processModel = (model: THREE.Group, animations: THREE.AnimationClip[]) => {
-          model.position.set(0, -1, 0);
-          model.scale.set(0.02, 0.02, 0.02);
+          // Calculate bounding box to understand model size
+          const box = new THREE.Box3().setFromObject(model);
+          const size = box.getSize(new THREE.Vector3());
+          const center = box.getCenter(new THREE.Vector3());
+          
+          console.log(`📦 Model ${state} - Size: ${size.x.toFixed(2)} x ${size.y.toFixed(2)} x ${size.z.toFixed(2)}`);
+          console.log(`📍 Model ${state} - Center: ${center.x.toFixed(2)}, ${center.y.toFixed(2)}, ${center.z.toFixed(2)}`);
+          
+          // Calculate scale to fit model to desired height (e.g., 2 units)
+          const desiredHeight = 2;
+          const currentHeight = size.y;
+          const scaleFactor = currentHeight > 0 ? desiredHeight / currentHeight : 0.02;
+          
+          console.log(`🔍 Model ${state} - Scale factor: ${scaleFactor.toFixed(4)}`);
+          
+          model.scale.set(scaleFactor, scaleFactor, scaleFactor);
+          
+          // Recalculate box after scaling
+          box.setFromObject(model);
+          const scaledCenter = box.getCenter(new THREE.Vector3());
+          
+          // Center the model and position it slightly below origin
+          model.position.set(-scaledCenter.x, -scaledCenter.y - 0.5, -scaledCenter.z);
           
           model.traverse((child) => {
             if ((child as THREE.Mesh).isMesh) {
@@ -129,6 +150,8 @@ export default function CZ3DViewer({ emotion = 'idle' }: CZ3DViewerProps) {
 
           model.visible = state === 'idle';
           scene.add(model);
+          
+          console.log(`✨ Model ${state} added to scene at position:`, model.position);
 
           const mixer = new THREE.AnimationMixer(model);
           

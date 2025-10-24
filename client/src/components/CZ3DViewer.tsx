@@ -104,8 +104,8 @@ export default function CZ3DViewer({ emotion = 'idle' }: CZ3DViewerProps) {
           console.log(`📦 Model ${state} - Size: ${size.x.toFixed(2)} x ${size.y.toFixed(2)} x ${size.z.toFixed(2)}`);
           console.log(`📍 Model ${state} - Center: ${center.x.toFixed(2)}, ${center.y.toFixed(2)}, ${center.z.toFixed(2)}`);
           
-          // Calculate scale to fit model to desired height (e.g., 2 units)
-          const desiredHeight = 2;
+          // Calculate scale to fit model to desired height (e.g., 4 units for 2x size)
+          const desiredHeight = 4;
           const currentHeight = size.y;
           const scaleFactor = currentHeight > 0 ? desiredHeight / currentHeight : 0.02;
           
@@ -118,7 +118,7 @@ export default function CZ3DViewer({ emotion = 'idle' }: CZ3DViewerProps) {
           const scaledCenter = box.getCenter(new THREE.Vector3());
           
           // Center the model and position it slightly below origin
-          model.position.set(-scaledCenter.x, -scaledCenter.y - 0.5, -scaledCenter.z);
+          model.position.set(-scaledCenter.x, -scaledCenter.y - 1, -scaledCenter.z);
           
           model.traverse((child) => {
             if ((child as THREE.Mesh).isMesh) {

@@ -1,7 +1,7 @@
-# CZ AI Streaming Platform
+# AI4CZ Streaming Platform
 
 ## Overview
-CZ AI is an interactive AI-powered streaming platform featuring "CZ," an advanced AI assistant on BNB Chain as a 3D animated character that responds to user messages in real-time in Chinese (中文). The platform combines live streaming aesthetics with AI chat capabilities, powered by BNB Chain technology. Users can interact with CZ through a chat interface while viewing an animated 3D character display, creating an engaging live-streaming experience. The platform also displays the BNB Chain smart contract address with copy-to-clipboard functionality.
+AI4CZ is an interactive AI-powered streaming platform featuring an advanced AI assistant as a 3D animated character that responds to user messages in real-time in Chinese (中文). Built on BNB Chain, the platform combines live streaming aesthetics with AI chat capabilities. Users can interact with the AI4CZ assistant through a chat interface while viewing an animated 3D character display, creating an engaging live-streaming experience. The official Twitter account is https://x.com/ai4_cz. The platform also displays the BNB Chain smart contract address with copy-to-clipboard functionality.
 
 ## User Preferences
 Preferred communication style: Simple, everyday language.
@@ -19,7 +19,7 @@ The frontend uses React 18 with TypeScript, Vite for bundling, and Wouter for ro
 - **File Size**: ~27MB per GLB file
 
 ### Backend Architecture
-The backend is an Express.js server handling HTTP requests and WebSocket connections for real-time chat. It supports dual AI providers (OpenAI GPT-3.5-turbo and Anthropic Claude Haiku) with a fallback mechanism, characterized by CZ's professional, friendly, and knowledgeable personality. CZ shares his narrative as BNB Chain's intelligent AI assistant, focused on making blockchain and cryptocurrency education accessible to everyone. He promotes learning, innovation, and understanding of Web3 technology, helping users navigate the decentralized world. An emotion-based response system uses sentiment analysis to detect emotional tones, triggering corresponding animations. Data persistence uses Drizzle ORM with PostgreSQL (via Neon) and Zod for schema validation. Real-time communication orchestrates client connections, user messages, AI responses, emotion state updates, and live viewer count tracking.
+The backend is an Express.js server handling HTTP requests and WebSocket connections for real-time chat. It supports dual AI providers (OpenAI GPT-3.5-turbo and Anthropic Claude Haiku) with a fallback mechanism. The AI assistant is exclusively focused on AI4CZ project topics, maintaining strict conversation boundaries to discuss only AI4CZ-related content. The assistant actively promotes the official Twitter account (https://x.com/ai4_cz) and politely redirects off-topic conversations back to AI4CZ. The AI personality is professional, friendly, and enthusiastic about the AI4CZ project. An emotion-based response system uses sentiment analysis to detect emotional tones, triggering corresponding animations. Data persistence uses Drizzle ORM with PostgreSQL (via Neon) and Zod for schema validation. Real-time communication orchestrates client connections, user messages, AI responses, emotion state updates, and live viewer count tracking.
 
 ### Feature Specifications
 - **BNB Wallet Authentication**: Users must connect a BNB Chain wallet to send messages, integrating with MetaMask/Web3 wallets. WalletContext manages global authentication state with secure validation and event listeners.

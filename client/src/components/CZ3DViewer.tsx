@@ -118,7 +118,7 @@ export default function CZ3DViewer({ emotion = 'idle' }: CZ3DViewerProps) {
           const scaledCenter = box.getCenter(new THREE.Vector3());
           
           // Center the model and position it slightly below origin
-          model.position.set(-scaledCenter.x, -scaledCenter.y - 0.8, -scaledCenter.z);
+          model.position.set(-scaledCenter.x, -scaledCenter.y - 0.2, -scaledCenter.z);
           
           model.traverse((child) => {
             if ((child as THREE.Mesh).isMesh) {

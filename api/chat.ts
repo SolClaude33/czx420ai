@@ -6,21 +6,22 @@ import Anthropic from "@anthropic-ai/sdk";
 const userLastMessageTime = new Map<string, number>();
 const MESSAGE_COOLDOWN_MS = 5000;
 
-// Debug: Log environment variables (first few chars only for security)
-console.log('Environment check:', {
-  hasOpenAI: !!process.env.OPENAI_API_KEY,
-  hasAnthropic: !!process.env.ANTHROPIC_API_KEY,
-  openAIPrefix: process.env.OPENAI_API_KEY?.substring(0, 10) || 'none',
-  anthropicPrefix: process.env.ANTHROPIC_API_KEY?.substring(0, 10) || 'none'
-});
+// Initialize clients inside handler to ensure env vars are loaded per request
+let openai: OpenAI | null = null;
+let anthropic: Anthropic | null = null;
 
-const openai = process.env.OPENAI_API_KEY ? new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-}) : null;
-
-const anthropic = process.env.ANTHROPIC_API_KEY ? new Anthropic({
-  apiKey: process.env.ANTHROPIC_API_KEY,
-}) : null;
+function initClients() {
+  if (!openai && process.env.OPENAI_API_KEY) {
+    openai = new OpenAI({
+      apiKey: process.env.OPENAI_API_KEY,
+    });
+  }
+  if (!anthropic && process.env.ANTHROPIC_API_KEY) {
+    anthropic = new Anthropic({
+      apiKey: process.env.ANTHROPIC_API_KEY,
+    });
+  }
+}
 
 export default async function handler(
   req: VercelRequest,
@@ -47,6 +48,17 @@ export default async function handler(
       return res.status(400).json({ error: 'Content is required' });
     }
 
+    // Initialize AI clients
+    initClients();
+    
+    // Debug: Log environment variables
+    console.log('Environment check:', {
+      hasOpenAI: !!process.env.OPENAI_API_KEY,
+      hasAnthropic: !!process.env.ANTHROPIC_API_KEY,
+      openAIInitialized: !!openai,
+      anthropicInitialized: !!anthropic
+    });
+
     const userKey = username || 'Anonymous';
     const now = Date.now();
     const lastMessageTime = userLastMessageTime.get(userKey) || 0;
@@ -65,7 +77,7 @@ export default async function handler(
     let aiResponse: any;
     
     // Try OpenAI first
-    if (openai) {
+    if (openai && process.env.OPENAI_API_KEY) {
       try {
         const completion = await openai.chat.completions.create({
           model: "gpt-3.5-turbo",
@@ -136,7 +148,7 @@ export default async function handler(
     }
     
     // Try Anthropic as fallback
-    if (!aiResponse && anthropic) {
+    if (!aiResponse && anthropic && process.env.ANTHROPIC_API_KEY) {
       try {
         const message = await anthropic.messages.create({
           model: "claude-3-haiku-20240307",

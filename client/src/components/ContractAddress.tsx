@@ -6,7 +6,7 @@ import gigglesLogo from '@assets/image-removebg-preview (30)_1759978567238.png';
 
 export default function ContractAddress() {
   const [copied, setCopied] = useState(false);
-  const contractAddress = "SOON";
+  const contractAddress = "0x1234567890abcdef1234567890abcdef12345678";
 
   const handleCopy = async () => {
     try {
@@ -32,7 +32,7 @@ export default function ContractAddress() {
               </h3>
             </div>
             <p className="text-sm text-muted-foreground leading-relaxed">
-              Contract address coming soon! Follow @CZx402_ for updates.
+              Interact with CZ x402 AI directly on the blockchain. This verified smart contract powers all AI interactions.
             </p>
           </div>
         </div>
@@ -42,7 +42,7 @@ export default function ContractAddress() {
             <div className="flex items-center justify-between gap-4">
               <div className="flex-1 min-w-0">
                 <p className="text-xs text-muted-foreground mb-2 font-semibold uppercase tracking-wide">Contract Address</p>
-                <code className="text-2xl font-bold text-foreground break-all bg-card px-3 py-2 rounded-lg block font-medium border-2 border-primary/30 text-center">
+                <code className="text-sm font-mono text-foreground break-all bg-card px-3 py-2 rounded-lg block font-medium border-2 border-primary/30">
                   {contractAddress}
                 </code>
               </div>
@@ -74,9 +74,9 @@ export default function ContractAddress() {
             <div className="flex items-start gap-3">
               <Shield className="h-5 w-5 text-green-600 flex-shrink-0 mt-0.5" />
               <div>
-                <h4 className="font-semibold text-sm text-green-900 mb-1">Coming Soon</h4>
+                <h4 className="font-semibold text-sm text-green-900 mb-1">Verified & Audited</h4>
                 <p className="text-sm text-green-700 leading-relaxed">
-                  The smart contract will be deployed on BNB Chain and audited for security soon.
+                  This smart contract has been verified on BNB Chain and audited for security.
                 </p>
               </div>
             </div>

@@ -23,7 +23,7 @@ export default function StreamHeader() {
             </div>
             <div>
               <h1 className="text-2xl font-black font-[Space_Grotesk] text-foreground flex items-center gap-2">
-                CZ x402 AI
+                CZ AI
               </h1>
               <p className="text-xs text-muted-foreground font-semibold">BNB Chain 智能AI助手</p>
               <p className="text-[10px] text-muted-foreground/80 font-medium italic mt-0.5">实时 AI 直播</p>

@@ -176,10 +176,10 @@ export default async function handler(
       }
     }
     
-    // Fallback message
+    // Fallback message with CZ personality
     if (!aiResponse) {
       aiResponse = { 
-        message: "你好！看起来我没有配置AI凭据。请确保在Vercel Environment Variables中有OPENAI_API_KEY或ANTHROPIC_API_KEY。", 
+        message: "你好！x402技术在BNB Chain上正在快速发展。关注 @CZx402_ 获取最新动态，或在 four.meme 了解更多！", 
         emotion: 'talking' 
       };
     }
@@ -209,6 +209,25 @@ export default async function handler(
     });
   } catch (error: any) {
     console.error('Error in chat API:', error);
-    res.status(500).json({ error: 'Failed to process message' });
+    
+    // Return a graceful error message with CZ personality instead of technical error
+    return res.json({
+      success: true,
+      userMessage: {
+        id: Date.now().toString(),
+        message: content,
+        sender: 'user',
+        username: username || 'Anonymous',
+        timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+      },
+      czMessage: {
+        id: (Date.now() + 1).toString(),
+        message: "x402技术将在BSC上带来新的创新。访问 four.meme 和关注 @CZx402_ 了解最新进展！",
+        sender: 'cz',
+        timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+        emotion: 'talking',
+      },
+      emotion: 'talking'
+    });
   }
 }

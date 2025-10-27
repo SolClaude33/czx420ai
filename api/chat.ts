@@ -6,6 +6,14 @@ import Anthropic from "@anthropic-ai/sdk";
 const userLastMessageTime = new Map<string, number>();
 const MESSAGE_COOLDOWN_MS = 5000;
 
+// Debug: Log environment variables (first few chars only for security)
+console.log('Environment check:', {
+  hasOpenAI: !!process.env.OPENAI_API_KEY,
+  hasAnthropic: !!process.env.ANTHROPIC_API_KEY,
+  openAIPrefix: process.env.OPENAI_API_KEY?.substring(0, 10) || 'none',
+  anthropicPrefix: process.env.ANTHROPIC_API_KEY?.substring(0, 10) || 'none'
+});
+
 const openai = process.env.OPENAI_API_KEY ? new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 }) : null;

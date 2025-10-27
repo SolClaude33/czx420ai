@@ -14,6 +14,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
   const userLastMessageTime = new Map<string, number>();
   const MESSAGE_COOLDOWN_MS = 5000;
 
+  // Store messages in memory for HTTP polling
+  const messageStore: any[] = [];
+  
   const broadcastViewerCount = () => {
     const count = wss.clients.size;
     wss.clients.forEach((client) => {
@@ -25,6 +28,66 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }
     });
   };
+
+  // HTTP API endpoint for Vercel compatibility
+  app.post('/api/chat', async (req, res) => {
+    try {
+      const { content, username } = req.body;
+      
+      const userKey = username || 'Anonymous';
+      const now = Date.now();
+      const lastMessageTime = userLastMessageTime.get(userKey) || 0;
+      const timeSinceLastMessage = now - lastMessageTime;
+
+      if (timeSinceLastMessage < MESSAGE_COOLDOWN_MS) {
+        const remainingTime = Math.ceil((MESSAGE_COOLDOWN_MS - timeSinceLastMessage) / 1000);
+        return res.status(429).json({ 
+          error: `请等待 ${remainingTime} 秒再发送下一条消息。` 
+        });
+      }
+
+      userLastMessageTime.set(userKey, now);
+
+      const aiResponse = await generateAIResponse(content);
+
+      const czMessage = {
+        id: Date.now().toString(),
+        message: aiResponse.message,
+        sender: 'cz',
+        timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+        emotion: aiResponse.emotion,
+        audioBase64: aiResponse.audioBase64,
+      };
+
+      // Store user message and AI response
+      const userMessage = {
+        id: (Date.now() - 1).toString(),
+        message: content,
+        sender: 'user',
+        username: username || 'Anonymous',
+        timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+      };
+
+      messageStore.push(userMessage, czMessage);
+
+      res.json({
+        success: true,
+        userMessage,
+        czMessage,
+        emotion: aiResponse.emotion
+      });
+    } catch (error) {
+      console.error('Error in chat API:', error);
+      res.status(500).json({ error: 'Failed to process message' });
+    }
+  });
+
+  // Get recent messages endpoint
+  app.get('/api/messages', (req, res) => {
+    const limit = parseInt(req.query.limit as string) || 50;
+    const messages = messageStore.slice(-limit);
+    res.json({ messages });
+  });
 
   wss.on('connection', (ws: WebSocket) => {
     console.log('New WebSocket connection established');

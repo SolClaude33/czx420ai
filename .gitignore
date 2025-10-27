@@ -5,7 +5,17 @@ server/public
 vite.config.ts.*
 *.tar.gz
 
-# Replit files
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# IDE and editor files
 .config/
 .local/
+*.log
+.vscode/
+.idea/
+
+# Replit files
 .replit

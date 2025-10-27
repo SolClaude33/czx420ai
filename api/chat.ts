@@ -40,8 +40,12 @@ export default async function handler(
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
+  const { content, username } = req.body || {};
+  
   try {
-    const { content, username } = req.body;
+    if (!content) {
+      return res.status(400).json({ error: 'Content is required' });
+    }
 
     const userKey = username || 'Anonymous';
     const now = Date.now();

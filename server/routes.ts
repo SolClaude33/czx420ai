@@ -122,7 +122,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
     ws.send(JSON.stringify({
       type: 'connection',
-      data: { message: 'Connected to CZ AI Stream' }
+      data: { message: 'Connected to CZ x402 AI Stream' }
     }));
   });
 

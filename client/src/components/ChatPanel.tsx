@@ -14,7 +14,7 @@ export default function ChatPanel() {
   const [messages, setMessages] = useState<ChatMessageType[]>([
     {
       id: "1",
-      message: "欢迎来到 CZ AI 直播！我是 CZ，BNB Chain 上的智能AI助手，在这里帮助你学习加密货币和区块链！连接你的 BNB 钱包开始与我聊天！",
+      message: "欢迎来到 CZ x402 AI 直播！我是 CZ，BNB Chain 上的智能AI助手，在这里帮助你学习加密货币和区块链！连接你的 BNB 钱包开始与我聊天！",
       sender: "cz",
       timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
     }

@@ -390,7 +390,7 @@ export default function CZ3DViewer({ emotion = 'idle' }: CZ3DViewerProps) {
           <div className="flex flex-col items-center gap-4 text-center px-8">
             <img 
               src={maxSticker2} 
-              alt="CZ AI" 
+                              alt="CZ x402 AI" 
               className="w-48 h-48 opacity-80 animate-bounce"
             />
             <div className="text-foreground text-2xl font-bold">

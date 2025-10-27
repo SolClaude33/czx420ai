@@ -39,7 +39,7 @@ export default function ChatMessage({ message, sender, timestamp, username }: Ch
       <div className={`flex flex-col gap-1.5 max-w-[75%] ${isCZ ? 'items-start' : 'items-end'}`}>
         <div className="flex items-center gap-2 px-1">
           <span className={`text-sm font-bold ${isCZ ? 'text-foreground' : 'text-foreground'}`}>
-            {isCZ ? 'CZ AI' : username || 'Anonymous'}
+            {isCZ ? 'CZ x402 AI' : username || 'Anonymous'}
           </span>
           <span className="text-xs text-muted-foreground font-medium">{timestamp}</span>
         </div>
